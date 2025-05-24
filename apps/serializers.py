@@ -1,22 +1,17 @@
-from rest_framework.exceptions import ValidationError
-from rest_framework.serializers import ModelSerializer
-
-from apps.models import OrganizationFile, Organization
+from rest_framework import serializers
+from .models import OrganizationFile
 
 
-class OrganizationSerializer(ModelSerializer):
-    class Meta:
-        model = Organization
-        fields = '__all__'
-
-
-class OrganizationFileSerializer(ModelSerializer):
+class OrganizationFileUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrganizationFile
         fields = '__all__'
+        read_only_fields = ['id', 'uploaded_at', 'file_code']
 
-    def validate_file_path(self, file):
-        max_size = 100 * 1024 * 1024  # 100MB
-        if file.size > max_size:
-            raise ValidationError("Fayl hajmi 100MB dan oshmasligi kerak.")
-        return file
+
+class FileCodeGenerateSerializer(serializers.Serializer):
+    owner_id = serializers.UUIDField()
+
+class FileCodeSubmitSerializer(serializers.Serializer):
+    file_code = serializers.CharField()
+    file = serializers.FileField()

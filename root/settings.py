@@ -1,3 +1,5 @@
+import os
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,7 +87,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -96,7 +97,6 @@ REST_FRAMEWORK = {
 
 }
 
-
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Your Project API',
     'DESCRIPTION': 'Your project description',
@@ -104,3 +104,6 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

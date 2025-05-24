@@ -1,5 +1,4 @@
 import uuid
-
 from django.core.exceptions import ValidationError
 from django.db.models import Model, CharField, UUIDField, DateTimeField, FileField, IntegerField
 
@@ -13,7 +12,8 @@ class Organization(Model):
 
 
 def upload_to(instance, filename):
-    return f"templates/{instance.owner_id}/{filename}"
+    return f"templates/{str(instance.owner_id)}/{filename}"
+
 
 class OrganizationFile(Model):
     id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -24,6 +24,8 @@ class OrganizationFile(Model):
     template_id = UUIDField(null=True, blank=True)
     parent_id = UUIDField(null=True, blank=True)
     uploaded_at = DateTimeField(auto_now_add=True)
+
+    file_code = CharField(max_length=50, unique=True, null=True, blank=True)  # <- ADD THIS
 
     def __str__(self):
         return self.file_name
