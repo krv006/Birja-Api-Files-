@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from apps.models import Organization, OrganizationFile
+
+admin.site.register(Organization)
+admin.site.register(OrganizationFile)
